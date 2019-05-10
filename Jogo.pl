@@ -1,7 +1,7 @@
 inicia() :- matrizBase(X), imprimeMatriz(X).
 
 %% Imprime a matriz atual do jogo
-imprimeMatriz([]) :- !.
+imprimeMatriz([ ]) :- !.
 imprimeMatriz([H|T]) :- imprimeLista(H), nl, imprimeMatriz(T).
 
 %% Imprime uam lista de elementos
