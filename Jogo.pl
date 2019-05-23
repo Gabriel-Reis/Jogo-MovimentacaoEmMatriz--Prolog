@@ -24,9 +24,15 @@ achaY(_,_,[],_) :- false.
 achaY(Y,Aux,[H|_],H) :- Y == Aux.
 achaY(Y,Aux,[_|HT],R) :- Aux1 is Aux + 1, achaY(Y,Aux1,HT,R).
 
+%%Descobre opções de caminhos
+elementoSuperior(X,Y,Elemento) :- N is Y-1,recuperaElemento(X,N,Elemento).
+elementoInferior(X,Y,Elemento) :- N is Y+1,recuperaElemento(X,N,Elemento).
+elementoEsquerda(X,Y,Elemento) :- N is X-1,recuperaElemento(N,Y,Elemento).
+elementoDireita(X,Y,Elemento) :- N is X+1,recuperaElemento(N,Y,Elemento).
+
 %%Descobre quantos elementos tem na lista
 %qntElemLista([],0).
 %qntElemLista([_|T], S) :- qntElemLista(T,G), S is 1+G.
 
 %%Matriz usada
-matrizBase([[1,2,9],[3,4,2],[1,2,3]]).
+matrizBase([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]).
