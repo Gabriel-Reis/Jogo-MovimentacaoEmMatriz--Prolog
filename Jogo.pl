@@ -32,7 +32,7 @@ elementoDireita(X,Y,Elemento) :- N is Y+1,recuperaElemento(X,N,Elemento).
 elementoEsquerda(X,Y,Elemento) :- N is Y-1,recuperaElemento(X,N,Elemento).
 
 %%Verifica se jogo chegou ao fim
-fimDeJogo() :- matrizBase(Matriz), verificaFim(Matriz,X), X < 2.
+fimDeJogo() :- matrizBase(Matriz), verificaFim(Matriz,X), X == 1.
 verificaFim([],X) :- X is 0, !.
 verificaFim([H|T],X) :- verificaFimColuna(H,X1), verificaFim(T,X2), X is X1 + X2.
 verificaFimColuna([],X) :- X is 0, !.
@@ -45,7 +45,16 @@ verificaFimColuna([H|T],X) :- H == 0, verificaFimColuna(T, R), X is R+1.
 %mover(Matriz, X,Y) :- x == 0, y == 0, moveAbaixo().
 
 %%Muda numero em (X,Y)
-%reduz(X,Y) :- recuperaElemento(X, Y, Z).
+decrementa(X,Y,MatrizAtualizada) :-  matrizBase(Matriz), reduz(X,Y,0,0,Matriz, MatrizAtualizada).
+reduz(_, _, _, _, [], _) :- !.
+reduz(X,Y, AuxX, AuxY, [H|T], [NH|T]) :- X == AuxX, Y = AuxY, NH is H-1.
+reduz(X,Y, AuxX, AuxY, [H|T], [H|T]) :- X == AuxX, NAuxY is AuxY +1, reduz(X,Y, AuxX, NAuxY, H, H).
+reduz(X,Y, AuxX, AuxY, [H|T], [H|T]) :- NAuxX is AuxX +1, reduz(X,Y, NAuxX,AuxY, T, T).
+
+%% reduzX(X,Y, AuxX, AuxY, [H|T], [H|T]) :- X == AuxX, reduzY(X,Y,AuxX, AuxY, H, H).
+%% reduzX(X,Y, AuxX, AuxY, [H|T], [H|T]) :- NAuxX is AuxX+1, reduzX(X,Y,NAuxX, AuxY, T, T).
+%% reduzY(_,Y, _, AuxY, [H|T], [NH|T]) :- Y == AuxY, NH is H-1.
+%% reduzY(X,Y, AuxX, AuxY, [H|T], [H|T]) :- reduzY(X,Y, AuxX, AuxY, T, T).
 
 %%Matriz usada
-matrizBase([[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]).
+matrizBase([[1,2],[3,4]]).
