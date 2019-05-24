@@ -25,10 +25,14 @@ achaY(Y,Aux,[H|_],H) :- Y == Aux.
 achaY(Y,Aux,[_|HT],R) :- Aux1 is Aux + 1, achaY(Y,Aux1,HT,R).
 
 %%Descobre opções de caminhos
-elementoSuperior(X,Y,Elemento) :- N is Y-1,recuperaElemento(X,N,Elemento).
-elementoInferior(X,Y,Elemento) :- N is Y+1,recuperaElemento(X,N,Elemento).
-elementoEsquerda(X,Y,Elemento) :- N is X-1,recuperaElemento(N,Y,Elemento).
-elementoDireita(X,Y,Elemento) :- N is X+1,recuperaElemento(N,Y,Elemento).
+elementosVizinhos(X,Y,[S,I,D,E]) :- elementoSuperior(X,Y,S), elementoInferior(X,Y,I),elementoDireita(X,Y,D),elementoEsquerda(X,Y,E).
+elementoSuperior(X,Y,Elemento) :- N is X-1,recuperaElemento(N,Y,Elemento).
+elementoInferior(X,Y,Elemento)  :- N is X+1,recuperaElemento(N,Y,Elemento).
+elementoDireita(X,Y,Elemento) :- N is Y+1,recuperaElemento(X,N,Elemento).
+elementoEsquerda(X,Y,Elemento) :- N is Y-1,recuperaElemento(X,N,Elemento).
+
+
+
 
 %%Descobre quantos elementos tem na lista
 %qntElemLista([],0).
