@@ -8,7 +8,7 @@ imprimeMatriz([H|T]) :- imprimeLista(H), nl, imprimeMatriz(T).
 imprimeLista([]):- !.
 imprimeLista([H|T]) :-
   write(H), 
-  write(" "),
+  write(", "),
   imprimeLista(T).
 
 %% Recupera elemento da lista
@@ -32,7 +32,7 @@ elementoDireita(X,Y,Elemento) :- N is Y+1,recuperaElemento(X,N,Elemento).
 elementoEsquerda(X,Y,Elemento) :- N is Y-1,recuperaElemento(X,N,Elemento).
 
 %%Verifica se jogo chegou ao fim
-fimDeJogo() :- matrizBase(Matriz), verificaFim(Matriz,X), X < 2.
+fimDeJogo() :- matrizBase(Matriz), verificaFim(Matriz,X), X == 1.
 verificaFim([],X) :- X is 0, !.
 verificaFim([H|T],X) :- verificaFimColuna(H,X1), verificaFim(T,X2), X is X1 + X2.
 verificaFimColuna([],X) :- X is 0, !.
@@ -44,8 +44,25 @@ verificaFimColuna([H|T],X) :- H == 0, verificaFimColuna(T, R), X is R+1.
 %mover(Matriz, X,Y) :- x == 0, y == 0, moveDireita().
 %mover(Matriz, X,Y) :- x == 0, y == 0, moveAbaixo().
 
+%procuraX(_, AuxX, MatrizVelha, _) :- tamanhoMatriz(MatrizVelha,Tam), write(Tam), AuxX > Tam.
+procuraX(_, _, [], []).
+procuraX(X, AuxX, [HO|TO], [HO|MatrizAtualizada]) :- NovoX is AuxX+1, procuraX(X, NovoX, TO, MatrizAtualizada).
+
 %%Muda numero em (X,Y)
-%reduz(X,Y) :- recuperaElemento(X, Y, Z).
+decrementa(X,Y,MatrizAtualizada) :-  matrizBase(Matriz), reduzX(X,Y,0,0,Matriz,MatrizAtualizada).
+	
+	reduzX(_,_,    _,    _,    [],         []) .
+	reduzX(X,Y,    X, AuxY, [H|T], [LAlt|Mat]) :- NX is X+1,reduzY(_,Y,   _,  AuxY, H, LAlt),reduzX(X,Y,NX, AuxY, T, Mat).
+	reduzX(X,Y, AuxX, AuxY, [H|T], [   H|Mat]) :- NAuxX is AuxX+1, reduzX(X,Y,NAuxX, AuxY, T,  Mat).
+	
+	reduzY(_,_, _,    _,    [],       []) .
+	reduzY(_,Y, _, AuxY, [H|T], [ H|MAT]) :- AuxY > Y,  NY is AuxY+1, reduzY(_,Y, _, NY, T, MAT).
+	reduzY(_,Y, _,    Y, [H|T], [NH|MAT]) :- NH is H-1, NY is Y+1, 	 reduzY(_,Y, _, NY, T, MAT).
+	reduzY(_,Y, _, AuxY, [H|T], [ H|MAT]) :- 		   NY is AuxY+1, reduzY(_,Y, _, NY, T, MAT).
+
+
+%comprimentoLista([],0).
+%comprimentoLista([_|R],N):- comprimentoLista(R,N1), N is 1 + N1.
 
 %%Matriz usada
-matrizBase([[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]).
+matrizBase([[1,2,3,4],[5,6,7,8],[9,10,11,12]]).
