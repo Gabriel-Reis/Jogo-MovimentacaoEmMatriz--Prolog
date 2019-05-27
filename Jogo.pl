@@ -44,35 +44,25 @@ verificaFimColuna([H|T],X) :- H == 0, verificaFimColuna(T, R), X is R+1.
 %mover(Matriz, X,Y) :- x == 0, y == 0, moveDireita().
 %mover(Matriz, X,Y) :- x == 0, y == 0, moveAbaixo().
 
+%procuraX(_, AuxX, MatrizVelha, _) :- tamanhoMatriz(MatrizVelha,Tam), write(Tam), AuxX > Tam.
+procuraX(_, _, [], []).
+procuraX(X, AuxX, [HO|TO], [HO|MatrizAtualizada]) :- NovoX is AuxX+1, procuraX(X, NovoX, TO, MatrizAtualizada).
+
 %%Muda numero em (X,Y)
-insereLista(E,X,[E|X]).
-insereFimLista(E,Lista,R) :- append(Lista,E,R).
-
-decrementa(X,Y,MatrizAtualizada) :-  matrizBase(Matriz), reduzX(X,Y,0,0,Matriz, MatrizAtualizada).
-reduzX(_,_,_,_,[],NResp) :- !.
-%reduzX(X,Y,XAux,YAux,[H|T],Resp) :- X == XAux, reduzY(Y,YAux,H,NL), insereLista(NL,Resp,NResp), NX is XAux+1, reduzX(X,Y,NX, YAux,T,NResp).
-reduzX(X,Y,XAux,YAux,[H|T],Resp) :- X == XAux, insereLista([H|H],Resp,NResp), NX is XAux+1, reduzX(X,Y,NX, YAux,T,NResp).
-reduzX(X,Y,XAux,YAux,[H|T],Resp) :- insereLista(H,Resp,NResp), NX is XAux+1, reduzX(X,Y,NX, YAux,T,NResp).
-reduzY(_,_,[],Resp).
-reduzY(Y,YAux,[H|T],Resp) :- Y == YAux, NH is H-1, insereLista(NH,Resp,NResp), NY is YAux+1, reduzY(Y,NY,T,NResp).
-reduzY(Y,YAux,[H|T],Resp) :- insereLista(H,Resp,NResp), NY is YAux+1, reduzY(Y,NY,T,NResp).
-
+decrementa(X,Y,MatrizAtualizada) :-  matrizBase(Matriz), reduzX(X,Y,0,0,Matriz,MatrizAtualizada).
+	
+	reduzX(_,_,    _,    _,    [],         []) .
+	reduzX(X,Y,    X, AuxY, [H|T], [LAlt|Mat]) :- NX is X+1,reduzY(_,Y,   _,  AuxY, H, LAlt),reduzX(X,Y,NX, AuxY, T, Mat).
+	reduzX(X,Y, AuxX, AuxY, [H|T], [   H|Mat]) :- NAuxX is AuxX+1, reduzX(X,Y,NAuxX, AuxY, T,  Mat).
+	
+	reduzY(_,_, _,    _,    [],       []) .
+	reduzY(_,Y, _, AuxY, [H|T], [ H|MAT]) :- AuxY > Y,  NY is AuxY+1, reduzY(_,Y, _, NY, T, MAT).
+	reduzY(_,Y, _,    Y, [H|T], [NH|MAT]) :- NH is H-1, NY is Y+1, 	 reduzY(_,Y, _, NY, T, MAT).
+	reduzY(_,Y, _, AuxY, [H|T], [ H|MAT]) :- 		   NY is AuxY+1, reduzY(_,Y, _, NY, T, MAT).
 
 
-%% decrementa(X,Y,MatrizAtualizada) :-  matrizBase(Matriz), reduz(X,Y,0,0,Matriz, MatrizAtualizada).
-%% reduz(X,Y,XAux,YAux,[H|T], Resp) :- X == XAux, Y == YAux, NH is H+1, insereFimLista(NH,Resp, XResp), insereFimLista(T,XResp, XResp).
-%% reduz(X,Y,XAux,YAux,[H|T], Resp) :- X == XAux, NYAux is YAux+1, insereFimLista(H,Resp,XResp), reduz(X,Y,XAux,NYAux,T,XResp).
-%% reduz(X,Y,XAux,YAux,[H|T], Resp) :- NXAux is XAux+1, insereFimLista(H,Resp,XResp), reduz(X,Y,NXAux,YAux,T,XResp).
-
-
-
-%% decrementa(X,Y,MatrizAtualizada) :-  matrizBase(Matriz), reduz(X,Y,0,0,Matriz, MatrizAtualizada).
-%% reduz(_, _, _, _, [], _) :- !.
-%% %% reduz(X,Y, AuxX, AuxY, [H|T], [NH|T]) :- X @>= AuxX, Y @>= AuxY, NH is H-1.
-%% reduz(X,Y, AuxX, AuxY, [H|T], [_|T]) :- X == AuxX, Y == AuxY, N is H-1, finaliza(X,Y, AuxX, AuxY,T,[N|T]).
-%% reduz(X,Y, AuxX, AuxY, [H|T], [H|T]) :- X == AuxX, NAuxY is AuxY +1, reduz(X,Y, AuxX, NAuxY, H, H).
-%% reduz(X,Y, AuxX, AuxY, [H|T], [H|T]) :- NAuxX is AuxX +1, reduz(X,Y, NAuxX,AuxY, T, T).
-%% finaliza(_,_,_,_,[H|T],[H|T]) :- finaliza(_,_,_,_,T,T).
+%comprimentoLista([],0).
+%comprimentoLista([_|R],N):- comprimentoLista(R,N1), N is 1 + N1.
 
 %%Matriz usada
-matrizBase([[1,2,3,4],[3,4,5,6]]).
+matrizBase([[1,2,3,4],[5,6,7,8],[9,10,11,12]]).
