@@ -71,7 +71,7 @@ jogar(Matriz, 0,Y,T) :- decrementa(0,Y,Matriz,NMAtriz),NY is Y-1,jogar(NMAtriz, 
 jogar(Matriz, T,Y,T) :- decrementa(T,Y,Matriz,NMAtriz),NX is T-1,jogar(NMAtriz, NX,  Y,T).	%LAT INF.
 jogar(Matriz, T,Y,T) :- decrementa(T,Y,Matriz,NMAtriz),NY is Y-1,jogar(NMAtriz,  T, NY,T).	%LAT INF.
 jogar(Matriz, T,Y,T) :- decrementa(T,Y,Matriz,NMAtriz),NY is Y-1,jogar(NMAtriz,  T, NY,T).	%LAT INF.
-%Situacoes do jogador nas bordas
+%Situacoes restantes
 jogar(Matriz, X,Y,T) :- decrementa(X,Y,Matriz,NMAtriz),NX is X-1,jogar(NMAtriz, NX, Y,T).
 jogar(Matriz, X,Y,T) :- decrementa(X,Y,Matriz,NMAtriz),NX is X+1,jogar(NMAtriz, NX, Y,T).
 jogar(Matriz, X,Y,T) :- decrementa(X,Y,Matriz,NMAtriz),NY is Y-1,jogar(NMAtriz, X, NY,T).
