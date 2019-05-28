@@ -8,7 +8,7 @@ imprimeLista([]).
 imprimeLista([H|T]) :- write(H),  write(", "), imprimeLista(T).
 
 escreveArq([]).
-escreveArq(Rota) :- open('caminho.txt', write, ID), writeq(ID, Rota ), write(ID, '.\n'), close(ID).
+escreveArq(Rota) :- open('caminho.txt', write, ID), writeq(ID,Rota), write(ID,'\n'), close(ID).
 
 %% Recupera elemento da lista
 recuperaElemento(X, Y, Elemento,Matriz) :- achaX(X,0,Matriz,ListaX), achaY(Y,0,ListaX,Elemento).
@@ -41,7 +41,7 @@ fimDeJogo(Matriz) :- verificaFim(Matriz,X), X == 1.
 	verificaFimColuna([H|T],X) :- H == 0, verificaFimColuna(T, R), X is R+1.
 
 %%Situacoes restantes
-jogar(Matriz, _,_,Rota) :- fimDeJogo(Matriz), escreveArq(Rota).
+jogar(Matriz, _,_,[]) :- fimDeJogo(Matriz), imprimeMatriz(Matriz).
 jogar(Matriz, X,Y,["S"|Rota]) :- elementoSuperior(X,Y,Z,Matriz),Z > -1,decrementa(X,Y,Matriz,NMAtriz),NX is X-1,jogar(NMAtriz, NX, Y,Rota).
 jogar(Matriz, X,Y,["I"|Rota]) :- elementoInferior(X,Y,Z,Matriz),Z > -1,decrementa(X,Y,Matriz,NMAtriz),NX is X+1,jogar(NMAtriz, NX, Y,Rota).
 jogar(Matriz, X,Y,["E"|Rota]) :- elementoEsquerda(X,Y,Z,Matriz),Z > -1,decrementa(X,Y,Matriz,NMAtriz),NY is Y-1,jogar(NMAtriz, X, NY,Rota).
@@ -57,4 +57,4 @@ decrementa(X,Y,Matriz, MatrizAtualizada) :- reduzX(X,Y,0,0,Matriz,MatrizAtualiza
 		reduzY(_,Y, _, AuxY, [H|T], [ H|MAT]) :- 		   NY is AuxY+1, reduzY(_,Y, _, NY, T, MAT).
 
 %%Matriz usada
-matrizBase([[1,1],[1,1]]).
+matrizBase([[1,1,1],[1,1,1],[1,1,1]]).
