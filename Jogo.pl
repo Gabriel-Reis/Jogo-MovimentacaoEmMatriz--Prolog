@@ -21,7 +21,7 @@ achaElemento(Elemento,Aux,[_|HT],R) :- Aux1 is Aux + 1, achaElemento(Elemento,Au
 elementosVizinhos(X,Y,[S,I,D,E],Matriz) :- elementoSuperior(X,Y,S,Matriz), elementoInferior(X,Y,I,Matriz), elementoDireita(X,Y,D,Matriz), elementoEsquerda(X,Y,E,Matriz).
 %%Descobre vizinhos de (X,Y)
 elementoSuperior(X,Y,Elemento,Matriz) :- N is X-1, recuperaElemento(N,Y,Elemento, Matriz).
-elementoSuperior(_,_,-5,_).
+elementoSuperior(_,_,-5,_). 
 elementoInferior(X,Y,Elemento,Matriz) :- N is X+1, recuperaElemento(N,Y,Elemento,Matriz).
 elementoInferior(_,_,-5,_).
 elementoDireita(X,Y,Elemento,Matriz) :- N is Y+1, recuperaElemento(X,N,Elemento,Matriz).
