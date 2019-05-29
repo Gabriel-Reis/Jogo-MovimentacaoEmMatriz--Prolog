@@ -10,12 +10,13 @@ imprimeLista([H|T]) :- write(H),  write(", "), imprimeLista(T).
 %% Escreve no arquivo
 escreveArq([]).
 escreveArq(Rota) :- open('caminho.txt', write, ID), escreveRota(Rota,ID), close(ID).
+
 escreveRota([],_) .
+escreveRota([H|[]],ID) :- write(ID, H).
 escreveRota([H|T],ID) :- write(ID, H), write(ID,'\n'), escreveRota(T,ID).
 
 %% Recupera elemento da lista
-recuperaElemento(X, Y, Elemento,Matriz) :- achaElemento(X,0,Matriz,ListaX), 
-achaElemento(Y,0,ListaX,Elemento).
+recuperaElemento(X, Y, Elemento,Matriz) :- achaElemento(X,0,Matriz,ListaX), achaElemento(Y,0,ListaX,Elemento).
 %% Acha um elemento.	
 achaElemento(_,_,[],_) :- false.
 achaElemento(Elemento,Aux,[H|_],H) :- Elemento == Aux.
@@ -35,28 +36,27 @@ elementoEsquerda(_,_,-5,_).
 
 %%Verifica se jogo chegou ao fim
 fimDeJogo(Matriz) :- verificaFim(Matriz,X), X == 1.
-	verificaFim([],X) :- X is 0.
-	verificaFim([H|T],X) :- verificaFimColuna(H,X1), verificaFim(T,X2), X is X1 + X2.
-	verificaFimColuna([],X) :- X is 0, !.
-	verificaFimColuna([H|T],R) :- H == -1, verificaFimColuna(T, R).
-	verificaFimColuna([H|T],X) :- H == 0, verificaFimColuna(T, R), X is R+1.
+
+verificaFim([],X) :- X is 0.
+verificaFim([H|T],X) :- verificaFimColuna(H,X1), verificaFim(T,X2), X is X1 + X2.
+
+verificaFimColuna([],X) :- X is 0, !.
+verificaFimColuna([H|T],R) :- H == -1, verificaFimColuna(T, R).
+verificaFimColuna([H|T],X) :- H == 0, verificaFimColuna(T, R), X is R+1.
 
 impossivelJogar(Matriz, X,Y) :- elementosVizinhos(X,Y,Resp,Matriz), verifica(Resp).
-	verifica([]).
-	verifica([H|T]) :- H < 0, verifica(T).
+
+verifica([]).
+verifica([H|T]) :- H < 0, verifica(T).
 
 %%Situacoes restantes
 jogar(Matriz, _,_, []) :- fimDeJogo(Matriz).
 jogar(Matriz, X,Y, _) :- impossivelJogar(Matriz, X,Y), fail.
-jogar(Matriz, X,Y,["S"|Rota]) :- elementoSuperior(X,Y,Z,Matriz),Z > -1,decrementa(X,Y,Matriz,NMatriz),
-																						NX is X-1,jogar(NMatriz, NX, Y,Rota).
-jogar(Matriz, X,Y,["I"|Rota]) :- elementoInferior(X,Y,Z,Matriz),Z > -1,
-decrementa(X,Y,Matriz,NMatriz),
-NX is X+1,jogar(NMatriz, NX, Y,Rota).
-jogar(Matriz, X,Y,["E"|Rota]) :- elementoEsquerda(X,Y,Z,Matriz),Z > -1,decrementa(X,Y,Matriz,NMatriz),
-																						NY is Y-1,jogar(NMatriz, X, NY,Rota).
-jogar(Matriz, X,Y,["D"|Rota]) :- elementoDireita(X,Y,Z,Matriz) ,Z > -1,decrementa(X,Y,Matriz,NMatriz),
-																						NY is Y+1,jogar(NMatriz, X, NY,Rota).
+jogar(Matriz, X,Y,["S"|Rota]) :- elementoSuperior(X,Y,Z,Matriz),Z > -1,decrementa(X,Y,Matriz,NMatriz),NX is X-1,jogar(NMatriz, NX, Y,Rota).
+jogar(Matriz, X,Y,["I"|Rota]) :- elementoInferior(X,Y,Z,Matriz),Z > -1, decrementa(X,Y,Matriz,NMatriz), NX is X+1,jogar(NMatriz, NX, Y,Rota).
+jogar(Matriz, X,Y,["E"|Rota]) :- elementoEsquerda(X,Y,Z,Matriz),Z > -1,decrementa(X,Y,Matriz,NMatriz),NY is Y-1,jogar(NMatriz, X, NY,Rota).
+jogar(Matriz, X,Y,["D"|Rota]) :- elementoDireita(X,Y,Z,Matriz) ,Z > -1,decrementa(X,Y,Matriz,NMatriz),NY is Y+1,jogar(NMatriz, X, NY,Rota).
+
 %%Muda numero em (X,Y)
 decrementa(X,Y,Matriz, MatrizAtualizada) :- reduzX(X,Y,0,0,Matriz,MatrizAtualizada).
 
