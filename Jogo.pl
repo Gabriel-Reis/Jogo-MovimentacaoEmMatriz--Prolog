@@ -33,7 +33,7 @@ escreveRota([H|T],ID) :- write(ID, H), write(ID,'\n'), escreveRota(T,ID).
 %% Recupera elemento na posição X Y da matriz
 %% Parametros: Posição X, posição Y, matriz, resposta
 %% Retorno: Elemento na posição (X,Y)
-recuperaElemento(X, Y,Matriz, Elemento) :- achaElemento(X,0,Matriz,ListaX), achaElemento(Y,0,ListaX,Elemento).
+recuperaElemento(X, Y,Matriz, Elemento):-achaElemento(X,0,Matriz,ListaX), achaElemento(Y,0,ListaX,Elemento).
 %% Acha um elemento (lista ou número) em uma posição em uma determinada lista.
 %% Parametros: posição do elemento, auxiliar de posição, Matriz e a Resposta.
 %% Retorno: Elemento na posição recebida.
@@ -91,7 +91,7 @@ verificaLista([H|T]) :- H < 0, verificaLista(T).
 %% Parametros: Posição X, posição Y, Matriz, Resposta
 %% Retorno: Acrescenta letra eferente ao caminho escolhido 
 %% S para superior, I para inferior, E para esquerda, D para direita
-jogar(_,_,Matriz, []) :- fimDeJogo(Matriz).
+jogar(X,Y,Matriz, []) :- fimDeJogo(Matriz), recuperaElemento(X,Y,Matriz,0).
 jogar(X,Y,Matriz, _) :- impossivelJogar(Matriz, X,Y), fail.
 jogar(X,Y,Matriz,["S"|Rota]) :- elementoSuperior(X,Y,Matriz,Z),Z > -1,
 					decrementa(X,Y,Matriz,NMatriz),NX is X-1,jogar(NX, Y,NMatriz,Rota).
