@@ -1,3 +1,6 @@
+%% Gabriel Augusto Requena dos Reis 16.2.8105
+%% Bruno Cesar Cota Conceição 13.2.8514
+ 
 %% Função que inicia o jogo
 %% Parametros: Posição inicial X, posição inicial Y, a matriz do jogo, retorno
 %% Retorno: uma lista com todos os caminhos possíveis de solução.
