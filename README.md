@@ -9,7 +9,7 @@
 O objetivo ́e solucionar o problema descrito na seccao 2.
 
 ```
-O jogo n ̃ao limita em nada utilizar qualquer predicado, somente diz o que se deseja e qual deve
+O jogo nao limita em nada utilizar qualquer predicado, somente diz o que se deseja e qual deve
 ser o resultado.
 ```
 Esse trabalho deve:
@@ -20,7 +20,7 @@ Esse trabalho deve:
 
 ## 2 O Problema
 
-Considere uma matriz M de n ́umeros inteiros e um marcador P em uma dada c ́elula (X,Y) da M. P pode andar para cima, para baixo, direita e esquerda de M, desde que essa c ́elula tenha um valor maior ou igual a zero. Quando P sai de (X,Y) para um nova celula, seu valor devera ser decrementado.
+Considere uma matriz M de numeros inteiros e um marcador P em uma dada c ́elula (X,Y) da M. P pode andar para cima, para baixo, direita e esquerda de M, desde que essa celula tenha um valor maior ou igual a zero. Quando P sai de (X,Y) para um nova célula, seu valor devera ser decrementado.
 
 Desevolva um programa logico que dado uma matriz M qualquer e um posicao para o marcador P, determine uma lista de passos que deve ser seguidos para que essa matriz fique com o valor negativo em todas as suas celuas. Deve-se anotar todas as possibilidades de passos e deve-se escrever em um arquivo o seu resultado.
 
@@ -53,7 +53,7 @@ Tabela 2: Matriz do primeiro passo
 ```
 deve ser um lista de passos que diz se vai ir para cima, direita, embaixo ou esquerda. O programa deve ser capaz de criar um arquivo que deve conter todas as possibilidades de andar na matriz completa, em que cada passo ́e separado por um espaco e cada linha diz qual a sequencia de passos para alcancar todas as posicoes da matriz.
 
-Entrega e Crit ́erios de Avalia ̧c ̃ao Todo oc ́odigo fonteproduzido deve ser entregue em um ́unico arquivo comprimido (.zip) no moodle ate as 23h e 59m do dia 02/06/2019.
+Entrega e Criterios de Avaliacao Todo o codigo fonteproduzido deve ser entregue em um ́unico arquivo comprimido (.zip) no moodle ate as 23h e 59m do dia 02/06/2019.
 
 ```
 Atenção
