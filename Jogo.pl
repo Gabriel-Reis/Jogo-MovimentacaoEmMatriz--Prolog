@@ -4,7 +4,7 @@
 %% Função que inicia o jogo
 %% Parametros: Posição inicial X, posição inicial Y, a matriz do jogo, retorno
 %% Retorno: uma lista com todos os caminhos possíveis de solução.
-play(X,Y,Matriz,Caminhos):-bagof(Caminho,jogar(X,Y,Matriz,Caminho),Caminhos),escreveArq(Caminhos).
+play(X,Y,Matriz,Caminhos):-bagof(Caminho,jogar(X,Y,Matriz,Caminho),Caminhos),escreveArq(Caminhos),!.
 
 %% Função que realiza as jogadas, caso não tenha acabado o jogo (matriz de fim e posição atual 0)
 %% e existe movimento possível movimenta acima, abaixo, esquerda ou direita.
@@ -25,20 +25,20 @@ jogar(X,Y,Matriz,["D"|Rota]) :- elementoDireita(X,Y,Matriz,Z) ,Z > -1,
 %% Se verificaFim der como resposta 1, retorna true
 %% Parametros: Matriz
 %% Retorno: true se jogo chegou ao fim
-fimDeJogo(Matriz) :- verificaFim(Matriz,X), X == 1.
+fimDeJogo(Matriz) :- verificaFim(Matriz,1).
 
 %% Verifica se todos os elementos são -1, e se for 0, incrementa contador
 %% Parametros: Matrix, reposta
 %% Retorno: Quantidade de 0's na matriz
-verificaFim([],X) :- X is 0.
+verificaFim([],0).
 verificaFim([H|T],X) :- verificaFimLinha(H,X1), verificaFim(T,X2), X is X1 + X2.
 
 %% verifica se todos elementos da lista são -1 e conta a quantidade de 0's
 %% Parametros: Matrix, reposta
 %% Retorno: Quantidade de 0's na lista
-verificaFimLinha([],X) :- X is 0, !.
-verificaFimLinha([H|T],R) :- H == -1, verificaFimLinha(T, R).
-verificaFimLinha([H|T],R) :- H == 0, verificaFimLinha(T, X), R is X+1.
+verificaFimLinha([],0).
+verificaFimLinha([-1|T],R) :- verificaFimLinha(T, R).
+verificaFimLinha([0|T],R) :- verificaFimLinha(T, X), R is X+1.
 
 %% Recupera elemento na posição X Y da matriz
 %% Parametros: Posição X, posição Y, matriz, resposta
@@ -49,7 +49,7 @@ recuperaElemento(X, Y,Matriz, Elemento):-achaElemento(X,0,Matriz,ListaX), achaEl
 %% Parametros: posição do elemento, auxiliar de posição, Matriz e a Resposta.
 %% Retorno: Elemento na posição recebida.
 achaElemento(_,_,[],_) :- false.
-achaElemento(Elemento,Aux,[R|_],R) :- Elemento == Aux.
+achaElemento(Elemento,Elemento,[R|_],R).
 achaElemento(Elemento,Aux,[_|HT],R) :- Aux1 is Aux + 1, achaElemento(Elemento,Aux1,HT,R).
 
 %% Verifica se existe alguma jogada possível, ou seja, se tem vizinhos maiores ou iguais a 0.
