@@ -2,11 +2,13 @@
 ## Trabalho Prático 1
 ## Liguagens de Programacao
 ### Professor Guilherme Baumgratz Figueiroa
+### Gabriel Augusto Requena dos Reis 16.2.8105
+### Bruno Cesar Cota Conceição 13.2.8514
 ### Abril 2019
 
 ## 1 Sobre o Trabalho
 
-O objetivo ́e solucionar o problema descrito na seccao 2.
+O objetivo ́e solucionar o problema descrito na seçao 2.
 
 ```
 O jogo nao limita em nada utilizar qualquer predicado, somente diz o que se deseja e qual deve
